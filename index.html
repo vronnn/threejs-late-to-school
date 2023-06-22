@@ -432,25 +432,27 @@
 
       const gameOverMessage = document.createElement("div");
       gameOverMessage.innerHTML = `
-      <div style="min-height: 100vh; width: 100vw; background-color: #10182799; display: grid; place-items: center;">
-        <div style="">
-          <h1 id="title" style="filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1)); line-height: 0;">Game Over</h1>
-          <button id="restartButton" style="
-            padding: 0.6rem 1.2rem;
-            background-color: #818cf8;
-            color: #fff;
-            border-radius: 6px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
-              0 2px 4px -2px rgb(0 0 0 / 0.1);
-            outline: none;
-            border: none;
-            font-size: 1.35rem; /* 20px */
-            font-weight: 600;
-            margin-top: 1rem;
-          ">Restart</button>     
-        </div> 
-      </div>
-    `;
+  <div style="min-height: 100vh; width: 100vw; background-color: rgba(150, 0, 0, 0.3); display: grid; place-items: center;">
+    <div style="background-color: rgba(16, 24, 39, 0.3); border-radius: 12px; padding: 2rem; box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);">
+      <h1 id="title" style="text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); line-height: 0;">Game Over</h1>
+      <button id="restartButton" style="
+        padding: 0.6rem 1.2rem;
+        background: linear-gradient(120deg, #ffcc00, #ffab00);
+        color: #fff;
+        border-radius: 6px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3),
+          0 2px 4px -2px rgba(0, 0, 0, 0.3);
+        outline: none;
+        border: none;
+        font-size: 1.35rem;
+        font-weight: 600;
+        margin-top: 2rem;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      ">Restart</button>     
+    </div> 
+  </div>
+`;
+
       gameOverMessage.style.display = "none";
       gameOverMessage.style.position = "absolute";
       gameOverMessage.style.top = "50%";
@@ -461,6 +463,28 @@
       gameOverMessage.style.textAlign = "center";
       gameOverMessage.style.fontSize = "36px";
       document.body.appendChild(gameOverMessage);
+
+      const restartButton = gameOverMessage.querySelector("#restartButton");
+      restartButton.addEventListener("mouseenter", () => {
+        restartButton.style.transform = "scale(1.1)";
+        restartButton.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.3)";
+      });
+
+      restartButton.addEventListener("mouseleave", () => {
+        restartButton.style.transform = "scale(1)";
+        restartButton.style.boxShadow =
+          "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3)";
+      });
+
+      restartButton.addEventListener("mousedown", () => {
+        restartButton.style.transform = "scale(0.9)";
+        restartButton.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.3)";
+      });
+
+      restartButton.addEventListener("mouseup", () => {
+        restartButton.style.transform = "scale(1.1)";
+        restartButton.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.3)";
+      });
 
       const scoreDisplay = document.createElement("div");
       scoreDisplay.style.position = "absolute";
@@ -494,7 +518,7 @@
       audioLoader.load("bg.mp3", function (buffer) {
         backgroundMusic.setBuffer(buffer);
         backgroundMusic.setLoop(true);
-        backgroundMusic.setVolume(0.105);
+        backgroundMusic.setVolume(0.015);
         backgroundMusic.play();
       });
 
@@ -571,7 +595,6 @@
         frames++;
       }
       animate();
-      const restartButton = document.getElementById("restartButton");
       restartButton.addEventListener("click", () => {
         location.reload();
       });
